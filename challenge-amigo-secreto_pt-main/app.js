@@ -13,7 +13,7 @@ function adicionarAmigo() {
     const nome = input.value.trim();
 
     if (!nome) {
-        exibirMensagem("Houston, temos um problema! Insira um nome. 🚀 (Apollo 13)");
+        exibirMensagem("Houston,, temos um problema! Insira um nome. 🚀 (Apollo 13)");
         return;
     }
 

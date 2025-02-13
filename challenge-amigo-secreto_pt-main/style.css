@@ -116,8 +116,8 @@ button {
 }
 
 .button-add {
-    background-color: var(--color-tertiary);
-    color: var(--color-text);
+    background-color: #3498db; /* Nova cor de fundo */
+    color: var(--color-text);   /* Cor do texto */
     border-radius: 0 25px 25px 0;
 }
 

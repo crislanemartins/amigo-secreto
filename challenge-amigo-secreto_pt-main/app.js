@@ -1,34 +1,34 @@
-// array
+// Array
 let amigos = [];
 let paresSorteados = [];
 
-// função para exibir uma mensagem de alerta de forma genérica
+// Função para exibir uma mensagem de alerta
 function exibirMensagem(mensagem) {
     alert(mensagem);
 }
 
-// função para adicionar um amigo à lista
+// Função para adicionar um amigo à lista
 function adicionarAmigo() {
     const input = document.getElementById('amigo');
     const nome = input.value.trim();
 
     if (!nome) {
-        exibirMensagem("Por favor, insira um nome."); // não, vazio não é nome. Tente de novo!
+        exibirMensagem("Houston, temos um problema! Insira um nome. 🚀 (Apollo 13)");
         return;
     }
 
     if (amigos.includes(nome)) {
-        exibirMensagem("Este nome já foi adicionado."); // ei, você já adicionou esse amigo! (Ou tem um clone por aí?).
+        exibirMensagem("Esse nome já foi adicionado! Parece que temos um Déjà vu. 🔄 (Matrix)");
         return;
     }
 
     amigos.push(nome);
     atualizarListaAmigos();
-    input.value = ""; // limpa o campo. Organização, meu caro!
+    input.value = ""; 
     input.focus();
 }
 
-// atualiza a lista de amigos na tela
+// Atualiza a lista de amigos na tela
 function atualizarListaAmigos() {
     const listaAmigos = document.getElementById('listaAmigos');
     listaAmigos.innerHTML = "";
@@ -36,66 +36,64 @@ function atualizarListaAmigos() {
     amigos.forEach((amigo) => {
         const li = document.createElement('li');
         li.textContent = amigo;
-        listaAmigos.appendChild(li); // adiciona amigo na lista ( mil anos depois )
+        listaAmigos.appendChild(li);
     });
+
+    console.log("Hakuna Matata! A lista foi atualizada. 🦁 (O Rei Leão)");
 }
 
-// função para embaralhar e garantir que ninguém tire a si mesmo
+// Função para embaralhar garantindo que ninguém tire a si mesmo
 function prepararSorteio() {
     if (amigos.length < 2) {
-        exibirMensagem("É necessário pelo menos 2 amigos para realizar o sorteio.");
+        exibirMensagem("Você precisa de pelo menos 2 amigos! 'Que a força esteja com você'. ✨ (Star Wars)");
         return;
     }
 
-    let sorteados = [amigos].sort(() => Math.random() - 0.5); // Embaralha os amigos
+    let sorteados;
     let tentativas = 0;
-    
+    const maxTentativas = 10;
 
-    while (tentativas < 10) { // limite de 10 tentativas para evitar loops infinitos
-        const validacao = sorteados.every((amigo, index) => amigo !== amigos[index]);
-        if (validacao) {
-            break; // Se todos os pares forem válidos, sai do loop
-        }
-        sorteados = [amigos].sort(() => Math.random() - 0.5); // Tenta novamente embaralhar
+    do {
+        sorteados = [...amigos].sort(() => Math.random() - 0.5);
         tentativas++;
-    }
+        if (tentativas >= maxTentativas) {
+            exibirMensagem("Eu tentei, mas 'a sorte nunca esteve ao seu favor'. 🔥 (Jogos Vorazes)");
+            return;
+        }
+    } while (sorteados.some((sorteado, i) => sorteado === amigos[i]));
 
-    if (tentativas === 10) {
-        exibirMensagem("Não foi possível realizar o sorteio após várias tentativas.");
-        return;
-    }
-
-    // cria os pares sorteados
     paresSorteados = amigos.map((amigo, i) => ({ amigo, sorteado: sorteados[i] }));
+
+    console.log("Sorteio pronto! 'Ao infinito e além!' 🚀 (Toy Story)");
 }
 
-// função para sortear um par por vez
+// Função para sortear um par por vez
 function sortearAmigo() {
     if (amigos.length < 2) {
-        exibirMensagem("Você precisa adicionar pelo menos 2 amigos para fazer o sorteio.");
+        exibirMensagem("Você precisa adicionar pelo menos 2 amigos. 'É perigoso ir sozinho!' ⚔️ (The Legend of Zelda)");
         return;
     }
 
-    // se o sorteio ainda não foi preparado, prepara os pares
+    // Se o sorteio ainda não foi preparado, prepara os pares
     if (paresSorteados.length === 0) {
-        prepararSorteio(); // preparar o sorteio na primeira vez
+        prepararSorteio();
     }
 
-    const ulResultado = document.getElementById('resultado'); // lista de resultados
+    const ulResultado = document.getElementById('resultado');
 
     if (paresSorteados.length > 0) {
-        const par = paresSorteados.shift(); // remove o próximo par da lista
+        const par = paresSorteados.shift();
         const li = document.createElement('li');
-        li.textContent = `${par.amigo} tirou ${par.sorteado}`; // exibe o sorteio
+        li.textContent = `${par.amigo} tirou ${par.sorteado}`;
         ulResultado.appendChild(li);
 
+        console.log(`'E o Oscar vai para...' 🎭 ${par.amigo} tirou ${par.sorteado}!`);
+
         if (paresSorteados.length === 0) {
-            exibirMensagem("Todos os amigos já foram sorteados!"); // fim do sorteio
+            exibirMensagem("Todos os amigos já foram sorteados! 'Encerramos por hoje, pessoal!' 🎤 (Looney Tunes)");
         }
     }
 }
 
-// garante que o sorteio será feito ao clicar no botão de sortear
-document.querySelector('.button-draw').addEventListener('click', function() {
-    sortearAmigo(); // realiza o sorteio diretamente ao clicar
-});
+// Evento para garantir que o sorteio será feito ao clicar no botão
+document.querySelector('.button-draw').addEventListener('click', sortearAmigo);
